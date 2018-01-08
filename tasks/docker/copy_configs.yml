@@ -11,7 +11,7 @@
   changed_when: false
   become: false
   failed_when: false
-  check_mode: no
+  always_run: true
   register: statconfig
 
 - name: try to fetch ceph keys
@@ -46,7 +46,7 @@
 - name: "copy mgr key to /var/lib/ceph/mgr/{{ cluster }}-{{ ansible_hostname }}/keyring"
   command: cp /etc/ceph/{{ cluster }}.mgr.{{ ansible_hostname }}.keyring /var/lib/ceph/mgr/{{ cluster }}-{{ ansible_hostname }}/keyring
   changed_when: false
-  check_mode: no
+  always_run: true
   with_items: "{{ statconfig.results }}"
   when: item.stat.exists == true
 
